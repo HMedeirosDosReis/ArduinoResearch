@@ -1,4 +1,4 @@
-
+/*
 #define ML_Ctrl 13  //define the direction control pin of left motor
 #define ML_PWM 11   //define the PWM control pin of left motor
 #define MR_Ctrl 12  //define direction control pin of right motor
@@ -49,7 +49,7 @@ digitalWrite(MR_Ctrl,HIGH);//set the direction control pin of right motor to HIG
   delay(2000);//delay in 2s
 }
 
-/*faster
+faster*/
 
 #define ML_Ctrl 13  //define the direction control pin of left motor
 #define ML_PWM 11   //define the PWM control pin of left motor

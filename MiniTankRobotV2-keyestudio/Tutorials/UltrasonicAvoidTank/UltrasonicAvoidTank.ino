@@ -8,9 +8,9 @@ int a2;
 #define MR_Ctrl 12  //define the direction control pin of right motor
 #define MR_PWM 3   //define PWM control pin of right motor
 
-#define Trig 5  //ultrasonic trig Pin
-#define Echo 4  //ultrasonic echo Pin
-int distance;
+int trigPin = 5;  //ultrasonic trig Pin
+int echoPin = 4;  //ultrasonic echo Pin
+long duration, cm, inches;
 #define servoPin 10  //servo Pin
 int pulsewidth;
 /************the function to run motor**************/
@@ -62,28 +62,30 @@ void procedure(int myangle) {
 }
 //The function to control ultrasonic sensor
 float checkdistance() {
-  digitalWrite(Trig, LOW);
+  digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
-  digitalWrite(Trig, HIGH);
+  digitalWrite(trigPin, HIGH);
   delayMicroseconds(10);
-  digitalWrite(Trig, LOW);
-  float distance = pulseIn(Echo, HIGH) / 58.00;  //58.20, that is, 2*29.1=58.2
+  digitalWrite(trigPin, LOW);
+  float distance = pulseIn(echoPin, HIGH) / 58.00;  //58.20, that is, 2*29.1=58.2
   delay(10);
+  Serial.println(distance);
   return distance;
 }
   //****************************************************************
 void setup(){
   pinMode(servoPin, OUTPUT);
   procedure(90); //set servo to 90°
-  
-  pinMode(Trig, OUTPUT);
-  pinMode(Echo, INPUT);
+  Serial.begin (9600);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
   pinMode(ML_Ctrl, OUTPUT);
   pinMode(ML_PWM, OUTPUT);
   pinMode(MR_Ctrl, OUTPUT);
   pinMode(MR_PWM, OUTPUT);
 }
 void loop(){
+ // Serial.println(distance);
   random2 = random(1, 100);
   a = checkdistance();  //assign the front distance detected by ultrasonic sensor to variable a
   
@@ -140,4 +142,5 @@ Car_left();  //robot turns left
   {
       Car_front(); //go front
   }
+  
 }
