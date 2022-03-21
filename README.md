@@ -1,1 +1,1 @@
-ReadMe
+This project will build and code an autonomous robot car that could drive around, avoid objects, and map out a room. An option to drive and control the car remotely over the internet will also be provided. This robot could also have some different functions added to it, such as taking pictures or recording a video and sending the results to the remote device that is controlling or monitoring the car.
