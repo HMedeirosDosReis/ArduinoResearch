@@ -112,7 +112,7 @@ void connect_WiFi()
     status = WiFi.begin(ssid, pass);
 
     // wait 10 seconds for connection:
-    delay(10000);
+    delay(20000);
   }
 }
 /*functions for driving should come here ***********/
@@ -123,6 +123,8 @@ void printWEB()
   {                               // if you get a client,
     Serial.println("new client"); // print a message out the serial port
     String currentLine = "";      // make a String to hold incoming data from the client
+    String status = "stopped";
+    bool shouldPrint=0;
     while (client.connected())
     { // loop while the client's connected
       if (client.available())
@@ -150,7 +152,8 @@ void printWEB()
             client.print("Click <a href=\"/B\">here</a> to go backward<br><br>");
             client.print("Click <a href=\"/A\">here</a> to turn on autopilot<br>");
             client.print("Click <a href=\"/O\">here</a> to turn off autopilot<br>");
-
+            //if(shouldPrint)
+              client.println("Status: "+status);
             // int randomReading = analogRead(A1);
             // client.print("Random reading from analog pin: ");
             // client.print(randomReading);
@@ -173,27 +176,44 @@ void printWEB()
         if (currentLine.endsWith("GET /R"))
         {
           carRight(); // should go right
+          status = "going right";
+          shouldPrint=1;
         }
         if (currentLine.endsWith("GET /L"))
         {
           carLeft(); // should go left
+          status = "going left";
+          shouldPrint=1;
         }
         if (currentLine.endsWith("GET /F"))
         {
           carFront(); // should go foward
+          status = "going foward";
+          shouldPrint=1;
         }
         if (currentLine.endsWith("GET /B"))
         {
           carBack(); // should go back
+          status = "going backward";
+          shouldPrint=1;
         }
         // needs testing
-        while (currentLine.endsWith("GET /A"))
+        if (currentLine.endsWith("GET /A"))
         {
           carAuto(); // should turn on autopilot
+          status = "autopilot mode on";
+          shouldPrint=1;
         }
         if (currentLine.endsWith("GET /O"))
         {
           carStop(); // should turn off autopilot
+          status = "stopped";
+          shouldPrint=1;
+        }
+        if(shouldPrint)
+        {
+          
+          shouldPrint=0;
         }
       }
     }
@@ -327,3 +347,5 @@ void carAuto()
     carFront(); // go front
   }
 }
+
+///status reports in the webpage
