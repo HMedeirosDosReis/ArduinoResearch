@@ -201,6 +201,7 @@ void printWEB()
         if (currentLine.endsWith("GET /A"))
         {
           carAuto(); // should turn on autopilot
+          delay(5000);
           status = "autopilot mode on";
           shouldPrint=1;
         }
